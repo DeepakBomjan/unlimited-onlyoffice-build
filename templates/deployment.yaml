@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onlyoffice-documentserver
+  namespace: onlyoffice
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: onlyoffice-documentserver
+  template:
+    metadata:
+      labels:
+        app: onlyoffice-documentserver
+    spec:
+      containers:
+        - name: onlyoffice-documentserver
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+            - containerPort: 8000
+          env:
+            - name: DB_TYPE
+              value: "postgres"
+            - name: DB_HOST
+              value: "{{ .Values.database.host }}"
+            - name: DB_PORT
+              value: "{{ .Values.database.port }}"
+            - name: DB_NAME
+              value: "{{ .Values.database.name }}"
+            - name: DB_USER
+              value: "{{ .Values.database.user }}"
+            - name: AMQP_URI
+              value: "amqp://{{ .Values.rabbitmq.user }}:{{ .Values.rabbitmq.password }}@{{ .Values.rabbitmq.host }}"
+          resources:
+            requests:
+              cpu: "{{ .Values.resources.requests.cpu }}"
+              memory: "{{ .Values.resources.requests.memory }}"
+            limits:
+              cpu: "{{ .Values.resources.limits.cpu }}"
+              memory: "{{ .Values.resources.limits.memory }}"
+          volumeMounts:
+            - name: documentserver-data
+              mountPath: /var/www/onlyoffice/Data
+            - name: documentserver-logs
+              mountPath: /var/log/onlyoffice
+            - name: documentserver-cache
+              mountPath: /var/lib/onlyoffice/documentserver/App_Data/cache/files
+            - name: documentserver-public-files
+              mountPath: /var/www/onlyoffice/documentserver-example/public/files
+      volumes:
+        - name: documentserver-data
+          persistentVolumeClaim:
+            claimName: documentserver-data-pvc
+        - name: documentserver-logs
+          persistentVolumeClaim:
+            claimName: documentserver-logs-pvc
+        - name: documentserver-cache
+          persistentVolumeClaim:
+            claimName: documentserver-cache-pvc
+        - name: documentserver-public-files
+          persistentVolumeClaim:
+            claimName: documentserver-public-files-pvc
+

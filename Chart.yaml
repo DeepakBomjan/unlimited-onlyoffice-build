@@ -1,0 +1,7 @@
+apiVersion: v2
+name: onlyoffice
+description: A Helm chart for deploying OnlyOffice Document Server
+type: application
+version: 0.1.0
+appVersion: "8.1.3"
+

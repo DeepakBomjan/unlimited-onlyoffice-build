@@ -1,0 +1,43 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/thomisus/onlyoffice-documentserver-unlimited
+  tag: "8.1.3"
+  pullPolicy: IfNotPresent
+
+database:
+  host: onlyoffice-postgresql
+  port: 5432
+  name: onlyoffice
+  user: onlyoffice
+  password: "changeme"  # Change this to a secure value
+
+rabbitmq:
+  host: onlyoffice-rabbitmq
+  user: guest
+  password: guest
+
+ingress:
+  enabled: true
+  className: nginx
+  host: oo-ds.example.com
+  apiHost: api.oo-ds.example.com
+  wsHost: ws.oo-ds.example.com
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "700Mi"
+  limits:
+    cpu: "1"
+    memory: "1500Mi"
+
+persistence:
+  storageClass: azurefile
+  dataSize: 10Gi
+  logSize: 5Gi
+  cacheSize: 5Gi
+  publicFilesSize: 10Gi
+  dbStorageClass: managed-premium
+  dbSize: 10Gi
+
