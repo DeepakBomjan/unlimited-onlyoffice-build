@@ -1,5 +1,5 @@
 apiVersion: v2
-name: onlyoffice
+name: unlimited-onlyoffice-kubernetes
 description: A Helm chart for deploying OnlyOffice Document Server
 type: application
 version: 0.1.0
