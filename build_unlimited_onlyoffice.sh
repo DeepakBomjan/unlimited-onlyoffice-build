@@ -121,16 +121,18 @@ build_image() {
         git clone https://github.com/thomisus/Docker-DocumentServer.git
     fi
     cd Docker-DocumentServer
-    git clean -fdx
     cp $WORK_DIR/build_tools/*.deb .
     # Replace wget with COPY in Dockerfile
     sed -i "s|RUN    wget -q -P /tmp [^ ]*onlyoffice-documentserver_[^ ]*amd64.deb|COPY ./$DEB_NAME /tmp|g" Dockerfile
-    sed -i '/COPY .\/onlyoffice-documentserver_8.3.0-1-xyz_amd64.deb/ {n; s|^|RUN |; s|^RUN\s*|RUN |}' Dockerfile
     sed -i "s|apt-get -yq install /tmp/onlyoffice-documentserver_[^ ]*.deb|apt-get -yq install /tmp/$DEB_NAME|g" Dockerfile
     sed -i "s|rm -f /tmp/onlyoffice-documentserver_[^ ]*.deb|rm -f /tmp/$DEB_NAME|g" Dockerfile
     sed -i "s|rm -f /tmp/\$PACKAGE_FILE|rm -rf /tmp/\$PACKAGE_FILE|g" Dockerfile
     sed -i '/onlyoffice-documentserver/ s/\"//g' Dockerfile
     sed -i '/COPY .*onlyoffice-documentserver.*\/tmp/s/.....$//' Dockerfile
+    line_no=$(awk '/COPY .\/onlyoffice-documentserver/ {print NR + 1}' Dockerfile)
+    sed -i "${line_no}s/^/RUN /" Dockerfile
+
+    # sed -i "/COPY .\/$DEB_NAME \/tmp && \\$/ s/ && \\//g" Dockerfile
 
     echo "Building docker images..."
     sudo docker build -t unlimited-onlyoffice .
