@@ -3,7 +3,10 @@
 This script builds the unlimited OnlyOffice Docker images. The following repositories are used in the build process:  
 
 1. [btactic-oo/unlimited-onlyoffice-package-builder](https://github.com/btactic-oo/unlimited-onlyoffice-package-builder.git)  
-2. [thomisus/Docker-DocumentServer](https://github.com/thomisus/Docker-DocumentServer.git)  
+2. [thomisus/Docker-DocumentServer](https://github.com/thomisus/Docker-DocumentServer.git)
+
+## Build Machine
+- Ubuntu 64
 
 ## Building Images  
 This script builds images based on the provided version. Run the following command to start the build:  
