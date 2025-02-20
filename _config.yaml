@@ -1,16 +1,16 @@
-# _config.yml
+# _config.yaml
 
 title: "Unlimited OnlyOffice Build"
 description: "A platform for Unlimited OnlyOffice Build using Jekyll."
 url: "https://deepakbomjan.github.io"  # Your GitHub Pages URL
 
 # Define the theme location (local theme directory)
-theme: ./theme
+theme: "theme"  # Correct path to the theme directory
 
 # The base URL of the site
 baseurl: ""  # Leave empty for the root directory or set if you're using a subdirectory
 
-# Jekyll Plugins
+# Jekyll Plugins (Optional)
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
@@ -22,7 +22,7 @@ markdown: kramdown
 permalink: /:year/:month/:day/:title/
 
 # Site URL for SEO purposes
-url: "https://deepakbomjan.github.io" 
+url: "https://deepakbomjan.github.io"
 
 # Language of the site
 lang: "en"
@@ -48,4 +48,3 @@ seo:
   title: "Unlimited OnlyOffice Build"
   description: "Build unlimited OnlyOffice setups using Jekyll!"
   image: "/assets/seo-image.png"  # Path to an image for SEO
-
