@@ -6,7 +6,7 @@ This script builds the unlimited OnlyOffice Docker images. The following reposit
 2. [thomisus/Docker-DocumentServer](https://github.com/thomisus/Docker-DocumentServer.git)
 
 ## Build Machine
-- Ubuntu 64
+- Ubuntu x64
 
 ## Building Images  
 This script builds images based on the provided version. Run the following command to start the build:  
