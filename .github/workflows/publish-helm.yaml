@@ -1,0 +1,45 @@
+name: Publish Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/unlimited-onlyoffice-kubernetes/**'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Bump Chart Version
+        run: |
+          CHART_PATH="charts/unlimited-onlyoffice-kubernetes/Chart.yaml"
+          VERSION=$(grep "^version:" $CHART_PATH | awk '{print $2}')
+          NEW_VERSION=$(echo $VERSION | awk -F. '{$NF += 1; OFS="."; print $0}')
+          sed -i "s/^version: .*/version: $NEW_VERSION/" $CHART_PATH
+          echo "New chart version: $NEW_VERSION"
+
+      - name: Package Helm Chart
+        run: |
+          helm package charts/unlimited-onlyoffice-kubernetes -d charts/
+
+      - name: Update Helm Repo Index
+        run: |
+          helm repo index charts/ --url https://DeepakBomjan.github.io/unlimited-onlyoffice-build/charts
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add charts/
+          git commit -m "Bump chart version & publish new release"
+          git push origin main
