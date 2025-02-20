@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  unlimited-onlyoffice-kubernetes:
+  - apiVersion: v2
+    appVersion: 8.3.0
+    created: "2025-02-20T07:13:37.406124+05:45"
+    description: A Helm chart for deploying OnlyOffice Document Server
+    digest: 656b050ef146f7a1672ad05534b2e5cd1cc4d5939ba5c42adf015db791371969
+    name: unlimited-onlyoffice-kubernetes
+    type: application
+    urls:
+    - https://DeepakBomjan.github.io/unlimited-onlyoffice-build/charts/unlimited-onlyoffice-kubernetes-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-02-20T07:13:37.404936+05:45"
